@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4671e812c482ab47baa42523e867d00, type: 3}
   m_Name: BlueGang
   m_EditorClassIdentifier: 
-  playSide: 2
-  health: 65
+  team: 1
+  health: 100
   moveSpeed: 7
   damage: 6

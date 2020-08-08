@@ -126,3 +126,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mobStats: {fileID: 0}
   behaviour: {fileID: 11400000, guid: 3be4cd8a363bb944491428a80768dc81, type: 2}
+  currentHealth: 0

@@ -46,7 +46,7 @@ public class DefaultBehaviour : BehaviourFunction
 
     private void chooseTarget(Mob self, MobStats selfStats, MobSceneData sceneData)
     {
-        if (chance(0.05f))
+        if (chance(0.15f))
         {
             // select some player
             self.target = randomFrom(Supervisor.currentSceneState.players);

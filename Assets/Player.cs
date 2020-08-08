@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     public MobStats stats;
 
-    private float currentHealth;
+    public float currentHealth;
     private float lastTimeAttack = 0.0f;
 
     Vector3 forward, right;

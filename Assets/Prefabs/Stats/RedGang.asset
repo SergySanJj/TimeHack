@@ -17,4 +17,4 @@ MonoBehaviour:
   moveSpeed: 5
   damage: 5
   attackPause: 3
-  attackRadius: 1
+  attackRadius: 2

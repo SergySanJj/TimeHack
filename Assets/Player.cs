@@ -74,6 +74,16 @@ public class Player : MonoBehaviour
         lastTimeAttack = Supervisor.playtime;
         Supervisor.self.attackSignal(this.gameObject, stats);
         Debug.Log("Player Attacks");
+        playAttackAnimation(this.gameObject);
+    }
+
+    private void playAttackAnimation(GameObject gameObject)
+    {
+        float jumpHeight = 0.5f;
+        float jumpTime = 0.1f;
+        float rotationTime = 0.4f;
+        LeanTween.move(gameObject, gameObject.transform.position + new Vector3(0, jumpHeight, 0), jumpTime).setEase(LeanTweenType.easeInQuad);
+        LeanTween.rotateAround(gameObject, new Vector3(0, 1f, 0), 300, rotationTime);
     }
 
     public void tryAttack()

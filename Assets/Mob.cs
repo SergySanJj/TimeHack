@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Mob : MonoBehaviour
 {
+    public float lastTimeAttack = 0.0f;
 
     [SerializeField] 
     public MobStats mobStats;
@@ -14,6 +15,8 @@ public class Mob : MonoBehaviour
     public MobSceneData sceneData;
 
     private float currentHealth;
+
+    public GameObject target = null;
 
     void Start()
     {
@@ -60,6 +63,28 @@ public class Mob : MonoBehaviour
     private float damageFunction(float damageValue)
     {
         return Random.Range(damageValue * 0.2f, damageValue);
+    }
+
+
+    public bool canAttack(MobStats selfStats)
+    {
+        return Supervisor.playtime - lastTimeAttack > selfStats.attackPause;
+    }
+
+
+    public void attack(GameObject self, MobStats selfStats)
+    {
+        lastTimeAttack = Supervisor.playtime;
+        Debug.Log("Mob Attack");
+        Supervisor.self.attackSignal(self, selfStats);
+        playAttackAnimation(self);
+    }
+
+    private void playAttackAnimation(GameObject gameObject)
+    {
+        float jumpHeight = 1f;
+        float jumpTime = 0.1f;
+        LeanTween.move(gameObject, gameObject.transform.position + new Vector3(0, jumpHeight, 0), jumpTime).setEase(LeanTweenType.easeInQuad);
     }
 
 }

@@ -28,7 +28,10 @@ public class Supervisor : MonoBehaviour
     public Spawner blueTeamSpawner;
 
     [SerializeField]
-    int teamsSize = 5;
+    public int redTeamsSize = 5;
+
+    [SerializeField]
+    public int blueTeamsSize = 5;
 
     public class SceneState
     {
@@ -54,6 +57,7 @@ public class Supervisor : MonoBehaviour
         {
             lastTime = playtime;
         }
+        
     }
 
     void updateInfo()
@@ -73,14 +77,14 @@ public class Supervisor : MonoBehaviour
         currentSceneState.players.Add(playerSpawner.spawn().GetComponent<Player>());
         currentSceneState.players[0].joystick = joystick;
 
-        for (int i = 0; i < teamsSize; i++)
+        for (int i = 0; i < blueTeamsSize; i++)
         {
-            currentSceneState.blueTeam.Add(blueTeamSpawner.spawn(i, teamsSize).GetComponent<Mob>());
+            currentSceneState.blueTeam.Add(blueTeamSpawner.spawn(i, blueTeamsSize).GetComponent<Mob>());
         }
 
-        for (int i = 0; i < teamsSize; i++)
+        for (int i = 0; i < redTeamsSize; i++)
         {
-            currentSceneState.redTeam.Add(redTeamSpawner.spawn(i, teamsSize).GetComponent<Mob>());
+            currentSceneState.redTeam.Add(redTeamSpawner.spawn(i, redTeamsSize).GetComponent<Mob>());
         }
     }
 
@@ -112,6 +116,8 @@ public class Supervisor : MonoBehaviour
 
     public void kill(Player player)
     {
+        Vector3 lastPosition = player.transform.position;
+        currentSceneState.players.Remove(player);
         Debug.Log("Player is dead");
     }
 

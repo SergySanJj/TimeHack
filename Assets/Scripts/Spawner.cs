@@ -16,8 +16,8 @@ public class Spawner : MonoBehaviour
         float basisOffset = index*distanceBetween - (total / 2) * distanceBetween;
         spawnerPos.x += basisOffset;
 
-        Instantiate(spawnable, spawnerPos, Quaternion.identity);
-        return spawnable;
+        GameObject o = Instantiate(spawnable, spawnerPos, Quaternion.identity);
+        return o;
     }
 
     public GameObject spawn()

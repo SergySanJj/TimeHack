@@ -124,3 +124,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 936fd22d5d04e67468b583537dc1d894, type: 2}
+  joystick: {fileID: 0}

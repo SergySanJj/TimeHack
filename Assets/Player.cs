@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class Player : MonoBehaviour
 
     Vector3 forward, right;
 
+    public Joystick joystick;
 
     void Start()
     {
@@ -20,19 +22,31 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.anyKey || Input.touchCount > 0)
             Move();
     }
 
     private void Move()
     {
-        Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Vector3 rightMovement = right * stats.moveSpeed * Time.deltaTime * Input.GetAxis("Horizontal");
-        Vector3 upMovement = forward * stats.moveSpeed * Time.deltaTime * Input.GetAxis("Vertical");
+        Vector3 rightMovement = right * stats.moveSpeed * Time.deltaTime * joystick.Horizontal;
+        Vector3 upMovement = forward * stats.moveSpeed * Time.deltaTime * joystick.Vertical;
 
         Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
         transform.forward = heading;
         transform.position += rightMovement;
         transform.position += upMovement;
+    }
+
+    private float joystickPositionScaler(float position)
+    {
+        float mult;
+        if (position > 0) mult = 1f; else mult = -1f;
+
+        if (Math.Abs(position) < 0.2)
+            return 0f;
+        if (Math.Abs(position) < 0.5)
+            return 0.5f * mult;
+        else
+            return 1.0f * mult;
     }
 }

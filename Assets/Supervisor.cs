@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Supervisor : MonoBehaviour
 {
-    int teamsSize = 5;
+    public Joystick joystick;
 
     private static float playtime = 0f;
     private static float lastTime = 0f;
@@ -26,6 +26,9 @@ public class Supervisor : MonoBehaviour
 
     [SerializeField]
     public Spawner blueTeamSpawner;
+
+    [SerializeField]
+    int teamsSize = 5;
 
     public class SceneState
     {
@@ -69,6 +72,7 @@ public class Supervisor : MonoBehaviour
     public void spawnAll()
     {
         currentSceneState.players.Add(playerSpawner.spawn().GetComponent<Player>());
+        currentSceneState.players[0].joystick = joystick;
 
         for (int i = 0; i < teamsSize; i++)
         {

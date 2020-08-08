@@ -9,6 +9,8 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     public GameObject spawnable;
 
+    public Joystick joystick;
+
     public GameObject spawn(int index, int total)
     {
 

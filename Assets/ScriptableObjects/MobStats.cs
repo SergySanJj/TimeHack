@@ -9,5 +9,7 @@ public class MobStats : ScriptableObject
 
     public float maxHealth = 100f;
     public float moveSpeed = 4f;
-    public float damage = 10f; 
+    public float damage = 10f;
+    public float attackPause = 1.0f;
+    public float attackRadius = 3.0f;
 }

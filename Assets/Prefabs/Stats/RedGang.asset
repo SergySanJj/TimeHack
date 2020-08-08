@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4671e812c482ab47baa42523e867d00, type: 3}
   m_Name: RedGang
   m_EditorClassIdentifier: 
-  playSide: 1
-  health: 150
+  team: 1
+  maxHealth: 100
   moveSpeed: 5
   damage: 5
+  attackPause: 3
+  attackRadius: 1

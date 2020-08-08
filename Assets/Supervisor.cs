@@ -7,7 +7,7 @@ public class Supervisor : MonoBehaviour
 {
     public Joystick joystick;
 
-    private static float playtime = 0f;
+    public static float playtime = 0f;
     private static float lastTime = 0f;
 
     private static int rollbackSeconds = 5;
@@ -52,7 +52,6 @@ public class Supervisor : MonoBehaviour
         playtime += Time.deltaTime;
         if (playtime - lastTime > 0.5f)
         {
-            updateInfo();
             lastTime = playtime;
         }
     }
@@ -108,6 +107,63 @@ public class Supervisor : MonoBehaviour
         } else
         {
             currentSceneState.blueTeam.Remove(mob);
+        }
+    }
+
+    public void kill(Player player)
+    {
+        Debug.Log("Player is dead");
+    }
+
+    public void attackSignal(GameObject from, MobStats stats)
+    {
+        Vector3 pos = from.transform.position;
+        if (stats.team == 0)
+        {
+            foreach (Mob enemy in currentSceneState.blueTeam)
+            {
+                float dist = Vector3.Distance(enemy.transform.position, from.transform.position);
+                if (dist < stats.attackRadius)
+                    enemy.receiveDamage(stats.damage);
+            }
+            foreach (Mob enemy in currentSceneState.redTeam)
+            {
+                float dist = Vector3.Distance(enemy.transform.position, from.transform.position);
+                if (dist < stats.attackRadius)
+                    enemy.receiveDamage(stats.damage);
+            }
+        }
+        else if (stats.team == 1)
+        {
+            foreach (Player enemy in currentSceneState.players)
+            {
+                float dist = Vector3.Distance(enemy.transform.position, from.transform.position);
+                if (dist < stats.attackRadius)
+                    enemy.receiveDamage(stats.damage);
+            }
+
+            foreach ( Mob enemy in currentSceneState.blueTeam)
+            {
+                float dist = Vector3.Distance(enemy.transform.position, from.transform.position);
+                if (dist < stats.attackRadius)
+                    enemy.receiveDamage(stats.damage);
+            }
+        }
+        else
+        {
+            foreach (Player enemy in currentSceneState.players)
+            {
+                float dist = Vector3.Distance(enemy.transform.position, from.transform.position);
+                if (dist < stats.attackRadius)
+                    enemy.receiveDamage(stats.damage);
+            }
+
+            foreach (Mob enemy in currentSceneState.redTeam)
+            {
+                float dist = Vector3.Distance(enemy.transform.position, from.transform.position);
+                if (dist < stats.attackRadius)
+                    enemy.receiveDamage(stats.damage);
+            }
         }
     }
 }

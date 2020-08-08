@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4671e812c482ab47baa42523e867d00, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  playSide: 0
-  health: 100
-  moveSpeed: 8
-  damage: 10
+  team: 0
+  maxHealth: 100
+  moveSpeed: 15
+  damage: 20
+  attackPause: 0.5
+  attackRadius: 3

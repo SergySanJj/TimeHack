@@ -13,7 +13,7 @@ public class Mob : MonoBehaviour
 
     public MobSceneData sceneData;
 
-    public float currentHealth;
+    private float currentHealth;
 
     void Start()
     {
@@ -37,7 +37,7 @@ public class Mob : MonoBehaviour
 
     public void receiveDamage(float damageValue)
     {
-        currentHealth -= damageValue;
+        currentHealth -= damageFunction(damageValue);
     }
 
     private bool isAlive()
@@ -56,4 +56,10 @@ public class Mob : MonoBehaviour
         Destroy(this.gameObject);
         Debug.Log("Mob death");
     }
+
+    private float damageFunction(float damageValue)
+    {
+        return Random.Range(damageValue * 0.2f, damageValue);
+    }
+
 }

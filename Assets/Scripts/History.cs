@@ -18,7 +18,7 @@ public class History
             PlayerHistoryElement playerHistoryElement = new PlayerHistoryElement();
             playerHistoryElement.position = player.transform.position;
             playerHistoryElement.health = player.currentHealth;
-            Debug.Log("History health " + player.currentHealth);
+            //Debug.Log("History health " + player.currentHealth);
             history.Enqueue(playerHistoryElement);
 
             while(history.Count > maxHistoryPoints)

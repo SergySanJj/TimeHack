@@ -7,7 +7,6 @@ using UnityEngine;
 public class DefaultBehaviour : BehaviourFunction
 {
 
-    private static System.Random rnd = new System.Random();
 
     public override void doActions(float deltaTime, GameObject self, MobStats selfStats, MobSceneData sceneData)
     {
@@ -15,7 +14,7 @@ public class DefaultBehaviour : BehaviourFunction
 
         if ( mob.target == null)
         {
-            chooseTarget(mob, selfStats, sceneData);
+            Supervisor.chooseTarget(mob, selfStats, sceneData);
         }
 
         targetApproachAndAttack(deltaTime, mob, selfStats, sceneData);
@@ -44,47 +43,5 @@ public class DefaultBehaviour : BehaviourFunction
     }
 
 
-    private void chooseTarget(Mob self, MobStats selfStats, MobSceneData sceneData)
-    {
-        if (chance(0.15f))
-        {
-            // select some player
-            self.target = randomFrom(Supervisor.currentSceneState.players);
-        } else
-        {
-            // select enemy
-            if (selfStats.team == 1)
-            {
-                self.target = randomFrom(Supervisor.currentSceneState.blueTeam);
-            } else
-            {
-                self.target = randomFrom(Supervisor.currentSceneState.redTeam);
-            }
-        }
-    }
-
-    private static GameObject randomFrom(List<Mob> lst)
-    {
-        if (lst.Count > 0)
-            return lst[rnd.Next(lst.Count)].gameObject;
-        else return null;
-    }
-
-    private static GameObject randomFrom(List<Player> lst)
-    {
-        if (lst.Count > 0)
-        {
-            int ind = rnd.Next(lst.Count);
-            if (lst[ind] != null)
-                return lst[ind].gameObject;
-            else
-                return null;
-        }
-        else return null;
-    }
-
-    private static bool chance(float possibility)
-    {
-        return Random.Range(0f, 1f) < possibility;
-    }
+    
 }

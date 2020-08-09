@@ -5,6 +5,7 @@ using UnityEngine;
 public class Mob : MonoBehaviour
 {
     public float lastTimeAttack = 0.0f;
+    public float lastChangeTarget = 0.0f;
 
     [SerializeField] 
     public MobStats mobStats;
@@ -41,6 +42,11 @@ public class Mob : MonoBehaviour
     public void receiveDamage(float damageValue)
     {
         currentHealth -= damageFunction(damageValue);
+
+        if (currentHealth < mobStats.maxHealth / 2)
+        {
+            Supervisor.chooseTarget(this, mobStats, sceneData);
+        }
     }
 
     private bool isAlive()

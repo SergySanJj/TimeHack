@@ -23,7 +23,7 @@ public class Mob : MonoBehaviour
     void Start()
     {
         currentHealth = mobStats.maxHealth;
-        changeEvery = Random.Range(3f, 7f);
+        changeEvery = Random.Range(2f, 5f);
 
         sceneData = new MobSceneData();
         Supervisor.self.initMobSceneData(this, sceneData);
@@ -41,6 +41,7 @@ public class Mob : MonoBehaviour
         {
             Supervisor.chooseTarget(this, mobStats, sceneData);
             lastChangeTarget = Supervisor.playtime;
+            changeEvery = Random.Range(3f, 5f);
         }
 
 
@@ -53,16 +54,9 @@ public class Mob : MonoBehaviour
 
         if (currentHealth < mobStats.maxHealth / 2)
         {
-            Supervisor.chooseTarget(this, mobStats, sceneData);
-            if (mobStats.team == 1)
-            {
-                target = Supervisor.self.redTeamSpawner.gameObject;
-            } else
-            {
-                target = Supervisor.self.blueTeamSpawner.gameObject;
-            }
-        }
-
+            target = Supervisor.randomFrom(Supervisor.self.pointsOfInterest);
+            changeEvery = Random.Range(4f, 7f);
+        } 
     }
 
     private bool isAlive()

@@ -113,7 +113,7 @@ public class Player : MonoBehaviour
 
         float dist = Vector3.Distance(targetPos, transform.position);
 
-        if (dist < 0.1)
+        if (dist < 0.4f)
             return;
 
         Vector3 dir = targetPos - transform.position;
@@ -121,9 +121,9 @@ public class Player : MonoBehaviour
         transform.position += dir * stats.moveSpeed * deltaTime;
 
         Vector3 heading = Vector3.Normalize(dir);
-        heading.y = 0;
+        //heading.y = 0;
 
-        if (heading.sqrMagnitude > 0.01)
+        if (heading.sqrMagnitude > 0.1)
             transform.forward = heading;
 
         transform.position = limitMovement(transform.position);

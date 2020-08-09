@@ -10,6 +10,9 @@ public class Supervisor : MonoBehaviour
     public int getPlayerTeam() { return playerTeam; }
 
     [SerializeField]
+    public List<GameObject> pointsOfInterest;
+
+    [SerializeField]
     public GameObject limitTopLeft;
     [SerializeField]
     public GameObject limitBotRight;
@@ -320,7 +323,12 @@ public class Supervisor : MonoBehaviour
         }
     }
 
-
+    public static GameObject randomFrom(List<GameObject> lst)
+    {
+        if (lst.Count > 0)
+            return lst[rnd.Next(lst.Count)].gameObject;
+        else return null;
+    }
 
     private static GameObject randomFrom(List<Mob> lst)
     {

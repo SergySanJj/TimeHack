@@ -10,7 +10,7 @@ public class History
     {
         public Queue<PlayerHistoryElement> history = new Queue<PlayerHistoryElement>();
 
-        public void addHistoryPoint(Player player, int maxHistoryPoints)
+        public void addHistoryPoint(Player player, bool wasAttacking, int maxHistoryPoints)
         {
             if (player == null)
                 return;
@@ -18,7 +18,7 @@ public class History
             PlayerHistoryElement playerHistoryElement = new PlayerHistoryElement();
             playerHistoryElement.position = player.transform.position;
             playerHistoryElement.health = player.currentHealth;
-            //Debug.Log("History health " + player.currentHealth);
+            playerHistoryElement.wasAttacking = wasAttacking;
             history.Enqueue(playerHistoryElement);
 
             while(history.Count > maxHistoryPoints)
@@ -39,6 +39,7 @@ public class History
         {
             public Vector3 position;
             public float health;
+            public bool wasAttacking;
         }
     }    
 }

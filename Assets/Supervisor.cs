@@ -37,9 +37,9 @@ public class Supervisor : MonoBehaviour
 
     private History history = new History();
     private History.PlayerHistory currentPlayerHistory = new History.PlayerHistory();
+    private bool playerAttacked = false;
 
     public static Supervisor self;
-
     public static SceneState currentSceneState = new SceneState();
 
 
@@ -113,7 +113,8 @@ public class Supervisor : MonoBehaviour
 
                 if (currentSceneState.players.Count > 0)
                 {
-                    currentPlayerHistory.addHistoryPoint(currentSceneState.players[currentSceneState.players.Count - 1], maxHistoryElements);
+                    currentPlayerHistory.addHistoryPoint(currentSceneState.players[currentSceneState.players.Count - 1], playerAttacked, maxHistoryElements);
+                    playerAttacked = false;
                 } else
                 {
                     return;
@@ -247,6 +248,9 @@ public class Supervisor : MonoBehaviour
         Vector3 pos = from.transform.position;
         if (stats.team == 0)
         {
+            if (!from.GetComponent<Player>().isRespawned)
+                playerAttacked = true;
+
             if (playerTeam==0 || playerTeam == 2)
                 attackIfCan(currentSceneState.redTeam, stats, pos);
             if (playerTeam == 0 || playerTeam == 1)

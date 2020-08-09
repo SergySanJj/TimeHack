@@ -90,6 +90,11 @@ public class Player : MonoBehaviour
         {
             History.PlayerHistory.PlayerHistoryElement el = playerHistory.history.Dequeue();
             targetPos = el.position;
+
+            if (el.wasAttacking)
+            {
+                attack();
+            }
         } else {
             die();
         }

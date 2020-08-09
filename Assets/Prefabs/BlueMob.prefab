@@ -163,5 +163,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robo2 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7985072381833909959, guid: 0998cf919f697c3419a6c6ed86e9058f,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 7fa0a4905b2585647b03ce912e8073b9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0998cf919f697c3419a6c6ed86e9058f, type: 3}

@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: b5b3cf5c8f6bcec44b933d7495d7f7d8
   - enabled: 1
+    path: Assets/Scenes/SelectSideScene.unity
+    guid: 7a5e1668ae603cd4aa3f14467edb5135
+  - enabled: 1
     path: Assets/Scenes/SergeiScene.unity
     guid: 65821a8909ac6764b8f4654ace428056
   m_configObjects: {}

@@ -6,6 +6,7 @@ public class Mob : MonoBehaviour
 {
     public float lastTimeAttack = 0.0f;
     public float lastChangeTarget = 0.0f;
+    public float changeEvery = 5f;
 
     [SerializeField] 
     public MobStats mobStats;
@@ -22,6 +23,7 @@ public class Mob : MonoBehaviour
     void Start()
     {
         currentHealth = mobStats.maxHealth;
+        changeEvery = Random.Range(3f, 7f);
 
         sceneData = new MobSceneData();
         Supervisor.self.initMobSceneData(this, sceneData);
@@ -35,6 +37,12 @@ public class Mob : MonoBehaviour
             return;
         }
 
+        if (Supervisor.playtime - lastChangeTarget > changeEvery)
+        {
+            Supervisor.chooseTarget(this, mobStats, sceneData);
+            lastChangeTarget = Supervisor.playtime;
+        }
+
 
         behaviour.doActions(Time.deltaTime, this.gameObject, mobStats, sceneData);
     }
@@ -46,7 +54,15 @@ public class Mob : MonoBehaviour
         if (currentHealth < mobStats.maxHealth / 2)
         {
             Supervisor.chooseTarget(this, mobStats, sceneData);
+            if (mobStats.team == 1)
+            {
+                target = Supervisor.self.redTeamSpawner.gameObject;
+            } else
+            {
+                target = Supervisor.self.blueTeamSpawner.gameObject;
+            }
         }
+
     }
 
     private bool isAlive()

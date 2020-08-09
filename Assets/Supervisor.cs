@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Supervisor : MonoBehaviour
 {
+    private int playerTeam = 0;
+    public int getPlayerTeam() { return playerTeam; }
+
     [SerializeField]
     public GameObject limitTopLeft;
     [SerializeField]
@@ -17,6 +21,11 @@ public class Supervisor : MonoBehaviour
 
     [SerializeField]
     public HealthBar playerHealthBar;
+
+    [SerializeField]
+    private TextMeshProUGUI battleStatus;
+    [SerializeField]
+    private TextMeshProUGUI resurectsLeft;
 
     public Joystick joystick;
 
@@ -49,6 +58,11 @@ public class Supervisor : MonoBehaviour
     [SerializeField]
     public int blueTeamsSize = 5;
 
+
+    private int resurectedTimes = 0;
+    [SerializeField]
+    public int maxResurects = 8;
+
     private static System.Random rnd = new System.Random();
 
 
@@ -63,10 +77,16 @@ public class Supervisor : MonoBehaviour
     {
         self = this;
         spawnAll();
+
+        battleStatus.GetComponent<TextMeshProUGUI>().enabled = false;
     }
 
     void Start()
     {
+        playerTeam = PlayerPrefs.GetInt("Team");
+        Debug.Log("Start with team " + playerTeam);
+
+        resurectsLeft.text = "" + (maxResurects - resurectedTimes);
     }
 
     void Update()
@@ -102,6 +122,8 @@ public class Supervisor : MonoBehaviour
             }
 
         }
+
+        winChecker();
         
     }
 
@@ -175,6 +197,13 @@ public class Supervisor : MonoBehaviour
         if (rollBackPlayer == null)
         {
             Debug.Log("You lose");
+            showDefeat();
+            return;
+        }
+
+        if (resurectedTimes == maxResurects)
+        {
+            showDefeat();
             return;
         }
 
@@ -199,6 +228,10 @@ public class Supervisor : MonoBehaviour
         playerHealthBar.changeSubscription(respawned);
         currentSceneState.players.Add(respawned);
 
+        resurectedTimes++;
+        resurectsLeft.text = "" + (maxResurects - resurectedTimes);
+
+
         history.needToBePlayed.Add(currentPlayerHistory);
         currentPlayerHistory = new History.PlayerHistory();
 
@@ -208,21 +241,27 @@ public class Supervisor : MonoBehaviour
 
     public void attackSignal(GameObject from, MobStats stats)
     {
+        if (from == null)
+            return;
+
         Vector3 pos = from.transform.position;
         if (stats.team == 0)
         {
-            attackIfCan(currentSceneState.redTeam, stats, pos);
-            attackIfCan(currentSceneState.blueTeam, stats, pos);
+            if (playerTeam==0 || playerTeam == 2)
+                attackIfCan(currentSceneState.redTeam, stats, pos);
+            if (playerTeam == 0 || playerTeam == 1)
+                attackIfCan(currentSceneState.blueTeam, stats, pos);
         }
         else if (stats.team == 1)
         {
-   
-            attackIfCan(currentSceneState.players, stats, pos);
+            if (playerTeam != 1)
+                attackIfCan(currentSceneState.players, stats, pos);
             attackIfCan(currentSceneState.blueTeam, stats, pos);
         }
-        else
+        else if(stats.team == 2)
         {
-            attackIfCan(currentSceneState.players, stats, pos);
+            if (playerTeam != 2)
+                attackIfCan(currentSceneState.players, stats, pos);
             attackIfCan(currentSceneState.redTeam, stats, pos);
         }
     }
@@ -241,6 +280,8 @@ public class Supervisor : MonoBehaviour
     {
         foreach (Player enemy in mobs)
         {
+            if (enemy == null)
+                continue;
             float dist = Vector3.Distance(enemy.transform.position, attackPosition);
             if (dist < stats.attackRadius)
                 enemy.receiveDamage(stats.damage);
@@ -256,7 +297,7 @@ public class Supervisor : MonoBehaviour
 
     public static void chooseTarget(Mob self, MobStats selfStats, MobSceneData sceneData)
     {
-        if (chance(0.15f))
+        if (selfStats.team!=Supervisor.self.playerTeam && chance(0.15f))
         {
             // select some player
             self.target = randomFrom(Supervisor.currentSceneState.players);
@@ -300,5 +341,46 @@ public class Supervisor : MonoBehaviour
     private static bool chance(float possibility)
     {
         return UnityEngine.Random.Range(0f, 1f) < possibility;
+    }
+
+    private bool winChecker()
+    {
+        if (playerTeam == 1)
+        {
+            if (currentSceneState.blueTeam.Count == 0)
+            {
+                showVictory();
+                return true;
+            }
+        }
+        if (playerTeam == 2)
+        {
+            if (currentSceneState.redTeam.Count == 0)
+            {
+                showVictory();
+                return true;
+            }
+        }
+        if (playerTeam == 0)
+        {
+            if (currentSceneState.redTeam.Count == 0 && currentSceneState.blueTeam.Count == 0)
+            {
+                showVictory();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void showDefeat()
+    {
+        battleStatus.GetComponent<TextMeshProUGUI>().enabled = true;
+        battleStatus.GetComponent<TextMeshProUGUI>().text = "Defeat";
+    }
+
+    private void showVictory()
+    {
+        battleStatus.GetComponent<TextMeshProUGUI>().enabled = true;
+        battleStatus.GetComponent<TextMeshProUGUI>().text = "Victory!";
     }
 }

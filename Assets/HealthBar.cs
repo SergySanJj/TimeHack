@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField]
-    private Image fillImage;
+    private Image fillImage = null;
 
-    private Player subscribedTo;
+    private Player subscribedTo = null;
 
     public void changeSubscription(Player player)
     {

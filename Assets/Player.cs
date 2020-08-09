@@ -20,16 +20,31 @@ public class Player : MonoBehaviour
     public MobStats stats;
 
     public float currentHealth;
+    public void setHealth(float value)
+    {
+        if (value > 0)
+            currentHealth = value;
+        else 
+            currentHealth = 0;
+        onChangePlayerHealth?.Invoke(value / stats.maxHealth);
+    }
+
     private float lastTimeAttack = 0.0f;
 
     Vector3 forward, right;
 
     public Joystick joystick;
 
+
+    public event Action<float> onChangePlayerHealth;
+    public void ChangeHealth(float val)
+    {
+        onChangePlayerHealth?.Invoke(val);
+    }
+
     private void OnEnable()
     {
-        currentHealth = stats.maxHealth;
-
+        setHealth(stats.maxHealth);
     }
 
     void Start()
@@ -166,7 +181,7 @@ public class Player : MonoBehaviour
 
     public void receiveDamage(float damageValue)
     {
-        currentHealth -= damageValue;
+        setHealth(currentHealth - damageValue);
     }
 
     private void OnDestroy()

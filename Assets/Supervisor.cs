@@ -15,6 +15,8 @@ public class Supervisor : MonoBehaviour
     [SerializeField]
     public Color ghostColor;
 
+    [SerializeField]
+    public HealthBar playerHealthBar;
 
     public Joystick joystick;
 
@@ -121,6 +123,7 @@ public class Supervisor : MonoBehaviour
         currentSceneState.players[0].setLightColor(playerColor);
         currentSceneState.players[0].joystick = joystick;
         currentSceneState.players[0].setBorders(limitTopLeft, limitBotRight);
+        playerHealthBar.changeSubscription(currentSceneState.players[0]);
 
         for (int i = 0; i < blueTeamsSize; i++)
         {
@@ -193,6 +196,7 @@ public class Supervisor : MonoBehaviour
         respawned.transform.position = rollBackPlayer.position;
         respawned.currentHealth = rollBackPlayer.health;
         respawned.setBorders(limitTopLeft, limitBotRight);
+        playerHealthBar.changeSubscription(respawned);
         currentSceneState.players.Add(respawned);
 
         history.needToBePlayed.Add(currentPlayerHistory);

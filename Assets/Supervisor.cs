@@ -5,12 +5,23 @@ using UnityEngine;
 
 public class Supervisor : MonoBehaviour
 {
+    [SerializeField]
+    public GameObject limitTopLeft;
+    [SerializeField]
+    public GameObject limitBotRight;
+
+    [SerializeField]
+    public Color playerColor;
+    [SerializeField]
+    public Color ghostColor;
+
+
     public Joystick joystick;
 
     public static float playtime = 0f;
     private static float lastTime = 0f;
     private static int rollbackSeconds = 5;
-    private static float historyFrequency = 0.5f;
+    private static float historyFrequency = 0.1f;
     private static int maxHistoryElements = (int)(rollbackSeconds / historyFrequency);
 
     private History history = new History();
@@ -60,10 +71,31 @@ public class Supervisor : MonoBehaviour
         {
             if (currentSceneState.players.Count > 0)
             {
+
+                foreach (Player player in currentSceneState.players)
+                {
+                    if (player.isRespawned)
+                    {
+                        if (player.hasHistoryItems())
+                            player.takeNextTarget();
+                        else
+                        {
+                            player.die();
+                            return;
+                        }
+                    }
+                }
+
+                if (currentSceneState.players.Count > 0)
+                {
+                    currentPlayerHistory.addHistoryPoint(currentSceneState.players[currentSceneState.players.Count - 1], maxHistoryElements);
+                } else
+                {
+                    return;
+                }
                 lastTime = playtime;
-                currentPlayerHistory.addHistoryPoint(currentSceneState.players[currentSceneState.players.Count - 1], maxHistoryElements);
             }
-           
+
         }
         
     }
@@ -83,7 +115,9 @@ public class Supervisor : MonoBehaviour
     public void spawnAll()
     {
         currentSceneState.players.Add(playerSpawner.spawn().GetComponent<Player>());
+        currentSceneState.players[0].setLightColor(playerColor);
         currentSceneState.players[0].joystick = joystick;
+        currentSceneState.players[0].setBorders(limitTopLeft, limitBotRight);
 
         for (int i = 0; i < blueTeamsSize; i++)
         {
@@ -124,15 +158,42 @@ public class Supervisor : MonoBehaviour
 
     public void kill(Player player)
     {
+        if (player.isRespawned)
+        {
+            currentSceneState.players.Remove(player);
+            Debug.Log("Player copy is dead");
+            return;
+        }
         History.PlayerHistory.PlayerHistoryElement rollBackPlayer = currentPlayerHistory.getPlayback();
+
+        if (rollBackPlayer == null)
+        {
+            Debug.Log("You lose");
+            return;
+        }
+
+        // Ghost
+        var ghost = Instantiate(player);
+        rollBackPlayer.position.y = 1.5f;
+        ghost.transform.position = rollBackPlayer.position;
+        ghost.currentHealth = rollBackPlayer.health;
+        Debug.Log("Respawn with " + rollBackPlayer.health);
+        ghost.respawnWith(currentPlayerHistory);
+        ghost.setLightColor(ghostColor);
+        ghost.setBorders(limitTopLeft, limitBotRight);
+        currentSceneState.players.Add(ghost);
+
+
+        // Playable player char
         var respawned = Instantiate(player);
+        rollBackPlayer.position.y = 3.0f;
         respawned.transform.position = rollBackPlayer.position;
         respawned.currentHealth = rollBackPlayer.health;
+        respawned.setBorders(limitTopLeft, limitBotRight);
         currentSceneState.players.Add(respawned);
 
         history.needToBePlayed.Add(currentPlayerHistory);
         currentPlayerHistory = new History.PlayerHistory();
-
 
         currentSceneState.players.Remove(player);
         Debug.Log("Player is dead");
@@ -179,5 +240,10 @@ public class Supervisor : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        currentSceneState = new SceneState();
+        currentPlayerHistory = new History.PlayerHistory();
 
+    }
 }

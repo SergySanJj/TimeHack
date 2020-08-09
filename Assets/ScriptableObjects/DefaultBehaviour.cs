@@ -73,7 +73,13 @@ public class DefaultBehaviour : BehaviourFunction
     private static GameObject randomFrom(List<Player> lst)
     {
         if (lst.Count > 0)
-            return lst[rnd.Next(lst.Count)].gameObject;
+        {
+            int ind = rnd.Next(lst.Count);
+            if (lst[ind] != null)
+                return lst[ind].gameObject;
+            else
+                return null;
+        }
         else return null;
     }
 

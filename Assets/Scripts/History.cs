@@ -12,9 +12,13 @@ public class History
 
         public void addHistoryPoint(Player player, int maxHistoryPoints)
         {
+            if (player == null)
+                return;
+
             PlayerHistoryElement playerHistoryElement = new PlayerHistoryElement();
             playerHistoryElement.position = player.transform.position;
             playerHistoryElement.health = player.currentHealth;
+            Debug.Log("History health " + player.currentHealth);
             history.Enqueue(playerHistoryElement);
 
             while(history.Count > maxHistoryPoints)
@@ -25,7 +29,10 @@ public class History
 
         public PlayerHistoryElement getPlayback()
         {
-            return history.Dequeue();
+            if (history.Count > 0)
+                return history.Dequeue();
+            else
+                return null;
         }
 
         public class PlayerHistoryElement

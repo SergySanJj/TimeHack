@@ -49,7 +49,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -217,6 +217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4d0f48784d8fe49a8d29f254ebe670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  limitTopLeft: {x: -12.5, y: 0, z: 20.5}
+  limitBotRight: {x: 27, y: 0, z: -16.5}
+  isRespawned: 0
   stats: {fileID: 11400000, guid: 936fd22d5d04e67468b583537dc1d894, type: 2}
   currentHealth: 0
   joystick: {fileID: 0}
@@ -286,6 +289,18 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 28723f10c2a8e094a9351e892f5271b8, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.33998108
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 28723f10c2a8e094a9351e892f5271b8, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 28723f10c2a8e094a9351e892f5271b8, type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 28723f10c2a8e094a9351e892f5271b8, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28723f10c2a8e094a9351e892f5271b8, type: 3}

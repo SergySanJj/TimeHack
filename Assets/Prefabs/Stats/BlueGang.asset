@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BlueGang
   m_EditorClassIdentifier: 
   team: 2
-  maxHealth: 60
+  maxHealth: 80
   moveSpeed: 7
   damage: 6
   attackPause: 1
-  attackRadius: 3
+  attackRadius: 2.5

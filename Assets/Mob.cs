@@ -75,7 +75,6 @@ public class Mob : MonoBehaviour
     public void attack(GameObject self, MobStats selfStats)
     {
         lastTimeAttack = Supervisor.playtime;
-        Debug.Log("Mob Attack");
         Supervisor.self.attackSignal(self, selfStats);
         playAttackAnimation(self);
     }

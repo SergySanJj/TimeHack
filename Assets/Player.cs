@@ -71,7 +71,13 @@ public class Player : MonoBehaviour
         } else
         {
             if (Input.anyKey || Input.touchCount > 0)
-                Move();
+            {
+                Move(joystick.Horizontal,joystick.Vertical);
+            } 
+            if (Input.anyKey)
+            {
+                Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            }
         }
     }
 
@@ -129,10 +135,10 @@ public class Player : MonoBehaviour
         transform.position = limitMovement(transform.position);
     }
 
-    private void Move()
+    private void Move(float horizValue, float vertValue)
     {
-        Vector3 rightMovement = right * stats.moveSpeed * Time.deltaTime * joystickPositionScaler(joystick.Horizontal);
-        Vector3 upMovement = forward * stats.moveSpeed * Time.deltaTime * joystickPositionScaler(joystick.Vertical);
+        Vector3 rightMovement = right * stats.moveSpeed * Time.deltaTime * horizValue;
+        Vector3 upMovement = forward * stats.moveSpeed * Time.deltaTime * vertValue;
 
         Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
         if (heading.sqrMagnitude > 0.001 )
@@ -173,7 +179,7 @@ public class Player : MonoBehaviour
     {
         float jumpHeight = 0.5f;
         float jumpTime = 0.1f;
-        float rotationTime = 0.4f;
+        float rotationTime = 0.2f;
         LeanTween.move(gameObject, limitMovement(gameObject.transform.position + new Vector3(0, jumpHeight, 0)), jumpTime).setEase(LeanTweenType.easeInQuad);
         LeanTween.rotateAround(gameObject, new Vector3(0, 1f, 0), 300, rotationTime);
     }

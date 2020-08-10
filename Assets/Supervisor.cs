@@ -304,7 +304,7 @@ public class Supervisor : MonoBehaviour
 
     public static void chooseTarget(Mob self, MobStats selfStats, MobSceneData sceneData)
     {
-        if (selfStats.team!=Supervisor.self.playerTeam && chance(0.15f))
+        if (selfStats.team!=Supervisor.self.playerTeam && chance(0.25f))
         {
             // select some player
             self.target = randomFrom(Supervisor.currentSceneState.players);

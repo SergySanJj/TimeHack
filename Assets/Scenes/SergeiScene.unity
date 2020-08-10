@@ -1697,7 +1697,7 @@ MonoBehaviour:
   playerHealthBar: {fileID: 2093433546}
   battleStatus: {fileID: 1066622830}
   resurectsLeft: {fileID: 1978966006}
-  joystick: {fileID: 1016571062}
+  joystick: {fileID: 1396947109}
   playerSpawner: {fileID: 940024102}
   redTeamSpawner: {fileID: 622803273}
   blueTeamSpawner: {fileID: 1571739487}
@@ -3241,18 +3241,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 699464123}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1016571062 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
-    type: 3}
-  m_PrefabInstance: {fileID: 2093835884}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1032788087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: a34baf84612115744b387198099f13da,
@@ -4288,6 +4276,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1388659630}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1396947107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252,
+    type: 3}
+  m_PrefabInstance: {fileID: 2093835884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1396947108
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396947107}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1396947109 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252,
+    type: 3}
+  m_PrefabInstance: {fileID: 2093835884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396947107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45977bbae16431c46a013576a1aea384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1397232366
 GameObject:
   m_ObjectHideFlags: 0
@@ -5677,6 +5695,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1341683639}
     m_Modifications:
+    - target: {fileID: 2929252283123773937, guid: aaa2c939c0359ac4dbce3f49e8b90252,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252,
         type: 3}
       propertyPath: m_LocalPosition.x
